@@ -30,6 +30,8 @@
   nav a { color: var(--soluk); text-decoration: none; font-weight: 600; font-size: 14px; margin-left: 22px; }
   nav a:hover { color: var(--metin); }
   @media (max-width: 720px) { nav a:not(.dugme) { display: none; } }
+  /* Telefonda iki düğme menüye sığmayıp üst üste biniyordu; İndir girişte zaten var */
+  @media (max-width: 480px) { nav a.dugme.ikinci { display: none; } }
 
   /* Düğmeler */
   .dugme { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 12px;
@@ -40,19 +42,51 @@
   .dugme.ikinci:hover { border-color: var(--vurgu); color: var(--vurgu); }
   nav .dugme { padding: 8px 16px; margin-left: 22px; }
 
-  /* Giriş */
-  .giris { padding: 72px 0 40px; display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: center; }
+  /* Giriş: ziyaretçi minigame'i kendisi dener, sonra botu izler */
+  .giris-alan { background: radial-gradient(700px 420px at 75% 45%, rgba(46,130,190,.18), transparent 70%), var(--arka); }
+  .giris { padding-block: 64px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .giris > * { min-width: 0; }
   .etiket { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--vurgu);
             border: 1px solid var(--kenar); background: var(--kart); padding: 5px 12px; border-radius: 999px; }
-  h1 { font-size: clamp(34px, 5vw, 52px); line-height: 1.1; margin: 18px 0 14px; letter-spacing: -.01em; }
+  h1 { font-size: clamp(38px, 5.6vw, 64px); line-height: 1.05; margin: 18px 0 16px; letter-spacing: -.02em; }
   h1 span { color: var(--vurgu); }
-  .giris p { color: var(--soluk); font-size: 18px; margin: 0 0 28px; max-width: 46ch; }
+  .giris p { color: var(--soluk); font-size: 18px; margin: 0 0 26px; max-width: 44ch; }
   .giris .dugmeler { display: flex; gap: 12px; flex-wrap: wrap; }
   .giris .not { font-size: 13px; color: var(--soluk); margin-top: 14px; }
+  @media (max-width: 900px) { .giris { grid-template-columns: 1fr; padding-top: 44px; } }
+  /* Ekran görüntüsü çerçevesi (galeri) */
   .ekran { border-radius: 16px; border: 1px solid var(--kenar); overflow: hidden; background: var(--kart);
            box-shadow: 0 30px 80px rgba(0,0,0,.55); }
   .ekran img { display: block; width: 100%; height: auto; }
-  @media (max-width: 900px) { .giris { grid-template-columns: 1fr; padding-top: 44px; } }
+  .skor { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 26px; max-width: 420px; }
+  .skor div { background: var(--kart); border: 1px solid var(--kenar); border-radius: 14px; padding: 12px 16px; }
+  .skor small { display: block; color: var(--soluk); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+  .skor b { font-size: 26px; font-variant-numeric: tabular-nums; }
+  .skor .bot b { color: var(--vurgu); }
+  .oyun-yan { display: grid; justify-items: center; gap: 14px; width: 100%; }
+  .oyun-yan .dugmeler { justify-content: center; }
+  .ipucu { color: #b9c0cc; font-size: 14px; text-align: center; min-height: 1.6em; margin: 0; }
+  .ipucu b { color: var(--vurgu); }
+  button.dugme { font: inherit; font-weight: 700; cursor: pointer; }
+
+  /* Oyundaki Balıkçılık penceresinin benzeri */
+  .oyun { width: min(100%, 380px); aspect-ratio: 1 / 1.02; border-radius: 6px; padding: 8px; position: relative;
+          background: linear-gradient(#3a2a1c, #22180f); border: 1px solid #6b5132;
+          box-shadow: 0 0 0 1px #000, 0 30px 90px rgba(0,0,0,.7); }
+  .oyun .baslik { height: 26px; margin: -2px 0 8px; border-radius: 3px; display: grid; place-items: center; font-size: 13px;
+                  color: #e9dcc4; background: linear-gradient(#6a2c1e, #4a1d13); border: 1px solid #8a5a3a; }
+  .oyun canvas { display: block; width: 100%; height: calc(100% - 34px); border: 1px solid #0d3550; border-radius: 2px;
+                 touch-action: manipulation; cursor: crosshair; }
+  .oyun .sayi { position: absolute; top: 46px; right: 18px; background: rgba(8,20,40,.7); border: 1px solid #3a6c96;
+                border-radius: 4px; padding: 2px 10px; font: 700 13px/1.4 ui-monospace, Consolas, monospace; color: #e6f2ff; }
+  .oyun .sure { position: absolute; left: 20px; right: 20px; bottom: 18px; height: 12px; border-radius: 6px;
+                background: #0b2236; border: 1px solid #3a6c96; overflow: hidden; }
+  .oyun .sure i { display: block; height: 100%; width: 100%; background: linear-gradient(#f6e15a, #c9a92a); transform-origin: left; }
+  .tost { position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%) scale(.9); opacity: 0; transition: .25s;
+          background: rgba(10,16,24,.92); border: 1px solid var(--yesil); color: var(--yesil); padding: 10px 18px;
+          border-radius: 12px; font-weight: 800; white-space: nowrap; pointer-events: none; }
+  .tost.gor { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  .tost.kotu { border-color: var(--kirmizi); color: var(--kirmizi); }
 
   section { padding: 56px 0; }
   h2 { font-size: 30px; margin: 0 0 8px; }
@@ -118,12 +152,15 @@
 </header>
 
 <main>
+  <div class="giris-alan">
   <div class="kap giris">
     <div>
       <span class="etiket">METİN2 BALIK BOTU</span>
-      <h1>Balık tutmayı <span>Poseidon</span>'a bırakın.</h1>
-      <p>Yem takar, oltayı atar, minigame'i oynar, istediğiniz balıkları tutar, pişirir.
-         Siz başka işle uğraşırken bot çalışır; durumu telefonunuzdan Telegram ile izlersiniz.</p>
+      <h1>Sen kaç balık <span>tutabilirsin?</span></h1>
+      <p>Balık halkanın içindeyken üstüne tıkla; 3 isabet bir balık eder. Şimdi aynısını saatlerce,
+         hiç kaçırmadan yaptığını düşün. Poseidon tam olarak bunu yapar.</p>
+      <div class="skor"><div><small>SEN</small><b id="skor-sen">0 / 0</b></div>
+                        <div class="bot"><small>POSEIDON</small><b id="skor-bot">0 / 0</b></div></div>
       <div class="dugmeler">
         <a class="dugme ana telegram" href="#">Telegram'dan satın al</a>
         <a class="dugme ikinci" href="https://github.com/Aren80/poseidon-surum/releases/download/platform-stable-v1.53.1/Poseidon-Kurulum-1.53.1.zip">İndir (Windows)</a>
@@ -131,7 +168,14 @@
       </div>
       <div class="not">Ödeme havale / EFT ile · key aynı gün Telegram'dan gelir</div>
     </div>
-    <div class="ekran"><img src="img/panel.png" alt="Poseidon kontrol paneli" width="1100" height="800"></div>
+    <div class="oyun-yan">
+      <div class="oyun" id="oyun"><div class="baslik">Balıkçılık</div>
+        <canvas aria-label="Balık tutma minigame'i: balık halkanın içindeyken üstüne tıklayın"></canvas>
+        <div class="sayi">0 / 3</div><div class="sure"><i></i></div><div class="tost" role="status"></div></div>
+      <p class="ipucu" id="ipucu">Balığa tıkla: <b>halkanın içindeyken</b> sayılır.</p>
+      <div class="dugmeler"><button class="dugme ikinci" id="oyun-mod" type="button">Botu izle</button></div>
+    </div>
+  </div>
   </div>
 
   <section id="ozellikler">
@@ -240,6 +284,104 @@
     a.target = "_blank";
     a.rel = "noopener";
   });
+
+  /* Giriş minigame'i: oyundaki Balıkçılık penceresinin sade benzeri. Balık suda dolaşır;
+     beyaz halkanın içindeyken balığa tıklanırsa isabet, 3 isabet bir balık, süre bitince kaçar.
+     "Botu izle"de kırmızı nişangâh (Poseidon) balığı izleyip halkadayken vurur. */
+  class Minigame {
+    constructor(kok, olay) {
+      this.cv = kok.querySelector("canvas"); this.ctx = this.cv.getContext("2d");
+      this.sayiEl = kok.querySelector(".sayi"); this.sureEl = kok.querySelector(".sure i"); this.tostEl = kok.querySelector(".tost");
+      this.bot = false; this.olay = olay; this.gorunur = true;
+      this.az = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      this.boyut(); new ResizeObserver(() => this.boyut()).observe(this.cv);
+      new IntersectionObserver(g => { this.gorunur = g[0].isIntersecting; }).observe(kok);
+      this.cv.addEventListener("pointerdown", e => { if (!this.bot) this.tikla(e); });
+      this.halkalar = []; this.yeni(); this.son = performance.now();
+      const dongu = t => { const dt = Math.min(.05, (t - this.son) / 1000); this.son = t;
+        if (this.gorunur && !document.hidden) { this.adim(dt); this.ciz(); } requestAnimationFrame(dongu); };
+      requestAnimationFrame(dongu);
+    }
+    boyut() { const r = this.cv.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1);
+      this.cv.width = Math.max(1, r.width * d); this.cv.height = Math.max(1, r.height * d); this.W = r.width; this.H = r.height; this.d = d; }
+    yeni() { this.isabet = 0; this.sure = 1; this.bekle = 0; this.botSonraki = .6;
+      this.f = { x: this.W * .25, y: this.H * .3, a: 0, hiz: 70 + Math.random() * 30, hedef: null };
+      this.nisan = { x: this.W * .8, y: this.H * .8 }; this.sayiEl.textContent = "0 / 3"; }
+    get halka() { return { x: this.W / 2, y: this.H * .47, r: Math.min(this.W, this.H) * .27 }; }
+    icinde() { const h = this.halka; return Math.hypot(this.f.x - h.x, this.f.y - h.y) < h.r; }
+    tost(m, kotu) { this.tostEl.textContent = m; this.tostEl.classList.toggle("kotu", !!kotu); this.tostEl.classList.add("gor");
+      clearTimeout(this.tt); this.tt = setTimeout(() => this.tostEl.classList.remove("gor"), 900); }
+    vur(x, y) {
+      const iyi = Math.hypot(x - this.f.x, y - this.f.y) < 26 && this.icinde();
+      this.halkalar.push({ x, y, t: 0, iyi });
+      if (!iyi) return;
+      this.isabet++; this.sayiEl.textContent = `${this.isabet} / 3`; this.f.hedef = null; this.f.hiz += 25;
+      if (this.isabet >= 3) { this.tost("Balık tutuldu!"); this.olay("tutuldu"); this.bekle = 1.1; }
+    }
+    tikla(e) { this.tiklandi = true; if (this.bekle > 0) return; const r = this.cv.getBoundingClientRect(); this.vur(e.clientX - r.left, e.clientY - r.top); }
+    adim(dt) {
+      if (this.az) dt *= .35;
+      if (this.bekle > 0) { this.bekle -= dt; if (this.bekle <= 0) this.yeni(); }
+      else { this.sure -= dt / (this.bot ? 9 : 7);
+        if (this.sure <= 0) { this.sure = 0; this.tost("Balık kaçtı", true); this.olay("kacti"); this.bekle = 1.1; } }
+      this.sureEl.style.transform = `scaleX(${Math.max(0, this.sure)})`;
+      const f = this.f, m = 24;
+      if (!f.hedef || Math.hypot(f.hedef.x - f.x, f.hedef.y - f.y) < 12)
+        f.hedef = { x: m + Math.random() * (this.W - 2 * m), y: m + Math.random() * (this.H - 2 * m - 30) };
+      let fark = Math.atan2(f.hedef.y - f.y, f.hedef.x - f.x) - f.a;
+      fark = Math.atan2(Math.sin(fark), Math.cos(fark)); f.a += fark * Math.min(1, dt * 4);
+      f.x += Math.cos(f.a) * f.hiz * dt; f.y += Math.sin(f.a) * f.hiz * dt;
+      if (this.bot) {
+        const n = this.nisan, ox = f.x + Math.cos(f.a) * f.hiz * .12, oy = f.y + Math.sin(f.a) * f.hiz * .12;
+        n.x += (ox - n.x) * Math.min(1, dt * 9); n.y += (oy - n.y) * Math.min(1, dt * 9);
+        this.botSonraki -= dt;
+        if (this.bekle <= 0 && this.botSonraki <= 0 && this.icinde() && Math.hypot(n.x - f.x, n.y - f.y) < 14) {
+          this.vur(n.x, n.y); this.botSonraki = .45; }
+      }
+      this.halkalar.forEach(h => h.t += dt); this.halkalar = this.halkalar.filter(h => h.t < .6);
+    }
+    ciz() {
+      const c = this.ctx, W = this.W, H = this.H, t = performance.now() / 1000;
+      c.setTransform(this.d, 0, 0, this.d, 0, 0);
+      const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, "#1c8fd6"); g.addColorStop(1, "#0a5fa6");
+      c.fillStyle = g; c.fillRect(0, 0, W, H);
+      c.strokeStyle = "rgba(255,255,255,.10)"; c.lineWidth = 1.2;
+      for (let i = 0; i < 14; i++) { c.beginPath(); const y0 = (i / 14) * H;
+        for (let x = 0; x <= W; x += 12) c.lineTo(x, y0 + Math.sin(x * .035 + t * 1.3 + i) * 5 + Math.sin(x * .011 - t * .7 + i * 2) * 7);
+        c.stroke(); }
+      const h = this.halka; c.strokeStyle = "rgba(255,255,255,.95)"; c.lineWidth = 3;
+      c.beginPath(); c.arc(h.x, h.y, h.r, 0, Math.PI * 2); c.stroke();
+      const f = this.f, k = Math.sin(t * 14) * .35; c.save(); c.translate(f.x, f.y); c.rotate(f.a);
+      c.fillStyle = "rgba(20,40,60,.78)"; c.beginPath(); c.ellipse(0, 0, 15, 6.5, 0, 0, Math.PI * 2); c.fill();
+      c.beginPath(); c.moveTo(-12, 0); c.lineTo(-24, -7 + k * 8); c.lineTo(-24, 7 + k * 8); c.closePath(); c.fill(); c.restore();
+      this.halkalar.forEach(r => { const s = 1 - r.t / .6;
+        c.strokeStyle = r.iyi ? `rgba(31,224,127,${s})` : `rgba(255,77,94,${s})`;
+        c.lineWidth = 2.5; c.beginPath(); c.arc(r.x, r.y, 8 + r.t * 50, 0, Math.PI * 2); c.stroke(); });
+      if (this.bot) { const n = this.nisan; c.strokeStyle = "#ff3b3b"; c.lineWidth = 2;
+        c.beginPath(); c.arc(n.x, n.y, 10, 0, Math.PI * 2); c.stroke(); }
+    }
+  }
+
+  (() => {
+    const kok = document.getElementById("oyun");
+    if (!kok || !kok.querySelector("canvas").getContext) return;
+    const skor = { sen: { v: 0, d: 0 }, bot: { v: 0, d: 0 } }; let mod = "sen";
+    const ipucu = document.getElementById("ipucu"), dugme = document.getElementById("oyun-mod");
+    const yaz = () => { document.getElementById("skor-sen").textContent = `${skor.sen.v} / ${skor.sen.d}`;
+                        document.getElementById("skor-bot").textContent = `${skor.bot.v} / ${skor.bot.d}`; };
+    const oyun = new Minigame(kok, o => {
+      if (mod === "sen" && !oyun.tiklandi) return;     // hiç oynamayan ziyaretçinin skoru işlemez
+      const s = skor[mod]; s.d++; if (o === "tutuldu") s.v++; yaz();
+      if (mod === "sen" && skor.sen.d >= 3) ipucu.innerHTML = "Fena değil! Şimdi <b>Botu izle</b>'ye bas ve farkı gör.";
+    });
+    dugme.addEventListener("click", () => {
+      mod = mod === "sen" ? "bot" : "sen"; oyun.bot = mod === "bot"; oyun.yeni();
+      dugme.textContent = mod === "bot" ? "Ben oynayayım" : "Botu izle";
+      ipucu.innerHTML = mod === "bot" ? "Kırmızı nişangâh Poseidon: balığı izler, <b>halkadayken</b> vurur."
+                                      : "Balığa tıkla: <b>halkanın içindeyken</b> sayılır.";
+    });
+    yaz();
+  })();
 </script>
 </body>
 </html>

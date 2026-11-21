@@ -115,7 +115,25 @@
   .paket .sure { color: var(--soluk); font-weight: 700; letter-spacing: .1em; font-size: 13px; }
   .paket .tutar { font-size: 42px; font-weight: 800; margin: 8px 0 2px; }
   .paket .tutar small { font-size: 18px; color: var(--soluk); font-weight: 600; }
-  .paket .gun { color: var(--soluk); font-size: 14px; margin-bottom: 20px; }
+  .paket .gun { color: var(--soluk); font-size: 14px; margin-bottom: 12px; }
+  .paket .eski { color: var(--soluk); font-size: 16px; text-decoration: line-through; margin-top: 6px; min-height: 22px; }
+  .kampanya { display: inline-block; background: var(--kirmizi); color: #fff; font-weight: 800; font-size: 13px;
+              letter-spacing: .06em; padding: 4px 12px; border-radius: 999px; margin-bottom: 12px; }
+  .paket .indirim { display: inline-block; background: var(--yesil-koyu); color: var(--yesil); font-size: 12px; font-weight: 800;
+                    padding: 2px 10px; border-radius: 999px; margin-bottom: 14px; }
+  .paket .indirim.altin { background: rgba(244,183,64,.12); color: var(--vurgu); }
+  .pc-not { margin: 22px auto 0; max-width: 640px; text-align: center; color: var(--soluk); font-size: 14.5px;
+            background: var(--kart); border: 1px dashed var(--kenar); border-radius: 14px; padding: 14px 18px; }
+  .pc-not b { color: var(--metin); }
+  .video { max-width: 860px; margin: 0 auto; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden;
+           border: 1px solid var(--kenar); background: #000; box-shadow: 0 20px 60px rgba(0,0,0,.45); }
+  .video iframe { width: 100%; height: 100%; border: 0; display: block; }
+  #video h2, #video .alt { text-align: center; }
+  .firsat { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 820px) { .firsat { grid-template-columns: 1fr; } }
+  .firsat .kart { padding: 28px; }
+  .firsat .buyuk { font-size: 26px; font-weight: 800; color: var(--vurgu); margin: 4px 0 8px; }
+  .firsat .dugme { margin-top: 16px; }
 
   /* Adımlar */
   .adimlar { counter-reset: a; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
@@ -142,10 +160,12 @@
     <a class="logo" href="#"><span class="p">P</span><b>POSEIDON</b></a>
     <nav>
       <a href="#ozellikler">Özellikler</a>
+      <a href="#video">Video</a>
       <a href="#fiyatlar">Fiyatlar</a>
+      <a href="#firsatlar">Fırsatlar</a>
       <a href="#nasil">Nasıl alınır</a>
       <a href="#sss">SSS</a>
-      <a class="dugme ikinci" href="https://github.com/Aren80/poseidon-surum/releases/download/platform-stable-v1.53.1/Poseidon-Kurulum-1.53.1.zip">İndir</a>
+      <a class="dugme ikinci" href="https://github.com/Aren80/poseidon-surum/releases/download/platform-stable-v1.54.0/Poseidon-Kurulum-1.54.0.zip">İndir</a>
       <a class="dugme ana telegram" href="#">Satın al</a>
     </nav>
   </div>
@@ -163,10 +183,10 @@
                         <div class="bot"><small>POSEIDON</small><b id="skor-bot">0 / 0</b></div></div>
       <div class="dugmeler">
         <a class="dugme ana telegram" href="#">Telegram'dan satın al</a>
-        <a class="dugme ikinci" href="https://github.com/Aren80/poseidon-surum/releases/download/platform-stable-v1.53.1/Poseidon-Kurulum-1.53.1.zip">İndir (Windows)</a>
+        <a class="dugme ikinci" href="https://github.com/Aren80/poseidon-surum/releases/download/platform-stable-v1.54.0/Poseidon-Kurulum-1.54.0.zip">İndir (Windows)</a>
         <a class="dugme ikinci" href="#fiyatlar">Fiyatları gör</a>
       </div>
-      <div class="not">Ödeme havale / EFT ile · key aynı gün Telegram'dan gelir</div>
+      <div class="not">Kampanya: aylık 1.500 TL · 1 gün ücretsiz deneme · key aynı gün Telegram'dan gelir</div>
     </div>
     <div class="oyun-yan">
       <div class="oyun" id="oyun"><div class="baslik">Balıkçılık</div>
@@ -211,29 +231,70 @@
     </div>
   </section>
 
+  <section id="video">
+    <div class="kap">
+      <h2>Poseidon'u iş başında izleyin</h2>
+      <p class="alt">Kurulumdan balık tutmaya kadar botun nasıl çalıştığını videoda görün.</p>
+      <div class="video">
+        <iframe src="https://www.youtube-nocookie.com/embed/Df4wTTm9hTU" title="Poseidon tanıtım videosu" loading="lazy"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
   <section id="fiyatlar">
     <div class="kap">
+      <span class="kampanya">KAMPANYA · KISA SÜRELİĞİNE</span>
       <h2>Fiyatlar</h2>
-      <p class="alt">Key, ilk girildiği bilgisayara bağlanır; süre o an başlar.</p>
+      <p class="alt">Süre, key ilk girildiği an başlar.</p>
       <div class="fiyatlar">
         <div class="kart paket">
-          <div class="sure">HAFTALIK</div>
-          <div class="tutar">750<small> TL</small></div>
-          <div class="gun">7 gün</div>
+          <div class="sure">AYLIK</div>
+          <div class="eski">2.000 TL</div>
+          <div class="tutar">1.500<small> TL</small></div>
+          <div class="gun">30 gün</div>
+          <div class="indirim">500 TL indirim</div><br>
           <a class="dugme ikinci telegram" href="#">Satın al</a>
         </div>
         <div class="kart paket one">
           <span class="rozet">EN ÇOK TERCİH EDİLEN</span>
-          <div class="sure">AYLIK</div>
-          <div class="tutar">2.000<small> TL</small></div>
-          <div class="gun">30 gün</div>
+          <div class="sure">3 AYLIK</div>
+          <div class="eski">5.500 TL</div>
+          <div class="tutar">4.000<small> TL</small></div>
+          <div class="gun">90 gün · ayda yalnızca ~1.333 TL</div>
+          <div class="indirim">1.500 TL indirim</div><br>
           <a class="dugme ana telegram" href="#">Satın al</a>
         </div>
         <div class="kart paket">
-          <div class="sure">3 AYLIK</div>
-          <div class="tutar">5.500<small> TL</small></div>
-          <div class="gun">90 gün</div>
+          <div class="sure">SINIRSIZ</div>
+          <div class="eski"></div>
+          <div class="tutar">6.000<small> TL</small></div>
+          <div class="gun">Süresiz · tek seferlik ödeme</div>
+          <div class="indirim altin">Bir kere öde, hep kullan</div><br>
           <a class="dugme ikinci telegram" href="#">Satın al</a>
+        </div>
+      </div>
+      <p class="pc-not">Tüm paketlerde <b>1 key en fazla 6 bilgisayarda</b> çalışır. 6'dan fazla bilgisayar için ikinci bir lisans alınması gerekir.</p>
+    </div>
+  </section>
+
+  <section id="firsatlar">
+    <div class="kap">
+      <h2>Fırsatlar</h2>
+      <p class="alt">Önce dene, sonra arkadaşlarını getir, kazan.</p>
+      <div class="firsat">
+        <div class="kart">
+          <h3>Ücretsiz deneme</h3>
+          <div class="buyuk">1 gün ücretsiz key</div>
+          <p><a class="destek" href="#video">Videomuzdan</a> geldiyseniz Telegram'dan yazın; botu 1 gün boyunca ücretsiz deneyin, beğenirseniz paket alın.</p>
+          <a class="dugme ana telegram" href="#">Deneme key'i iste</a>
+        </div>
+        <div class="kart">
+          <h3>Arkadaşını getir</h3>
+          <div class="buyuk">Her arkadaşa +1 hafta</div>
+          <p>Getirdiğiniz her kişi aylık (veya daha uzun) paket aldığında, size 1 hafta ücretsiz key süresi eklenir. Ne kadar çok kişi, o kadar çok hafta.</p>
+          <a class="dugme ikinci telegram" href="#">Telegram'dan bilgi al</a>
         </div>
       </div>
     </div>
@@ -247,7 +308,7 @@
         <div class="kart adim"><h3>Telegram'dan yazın</h3><p>İstediğiniz paketi söyleyin; ödeme bilgilerini size özelden iletiriz.</p></div>
         <div class="kart adim"><h3>Havale / EFT yapın</h3><p>Açıklamaya yalnızca Telegram kullanıcı adınızı yazın, dekontu gönderin.</p></div>
         <div class="kart adim"><h3>Key'iniz gelsin</h3><p>Ödeme görülünce key'iniz Telegram'dan gönderilir.</p></div>
-        <div class="kart adim"><h3>İndirip başlayın</h3><p><a href="https://github.com/Aren80/poseidon-surum/releases/download/platform-stable-v1.53.1/Poseidon-Kurulum-1.53.1.zip">Poseidon kurulum paketini</a> (~60 MB) indirin, bir klasöre çıkarın, Poseidon klasöründeki Poseidon.exe'yi açın. İlk açılışta en son sürüm kendiliğinden kurulur; sonra key'i girin. Klasörde yalnızca Poseidon.exe görünür; botu her zaman onunla açın.</p></div>
+        <div class="kart adim"><h3>İndirip başlayın</h3><p><a href="https://github.com/Aren80/poseidon-surum/releases/download/platform-stable-v1.54.0/Poseidon-Kurulum-1.54.0.zip">Poseidon kurulum paketini</a> (~60 MB) indirin, bir klasöre çıkarın, Poseidon klasöründeki Poseidon.exe'yi açın. İlk açılışta en son sürüm kendiliğinden kurulur; sonra key'i girin. Klasörde yalnızca Poseidon.exe görünür; botu her zaman onunla açın.</p></div>
       </div>
     </div>
   </section>
@@ -258,7 +319,7 @@
       <p class="alt">&nbsp;</p>
       <details open><summary>Kurulum ya da ayar sorum var, nereye sorayım?</summary><p>Telegram'daki <a class="destek" href="https://t.me/PoseidonDestekBot" target="_blank" rel="noopener">@PoseidonDestekBot</a> destek botumuza yazın; kurulum ve ayar sorularını (ör. "3 karakteri sırayla nasıl tuttururum?") hemen cevaplar. Cevabını bilmediği sorular ve lisans, key, ödeme konuları destek ekibine iletilir.</p></details>
       <details><summary>Neler gerekiyor?</summary><p>Windows 10 ya da 11 ve Metin2 istemcisi. Ekstra program kurmanız gerekmez; güncellemeler kendiliğinden indirilip kurulur. Oyun penceresinin 800×600 boyutta ve ekranda görünür olması önerilir.</p></details>
-      <details><summary>Key'i başka bilgisayarda kullanabilir miyim?</summary><p>Key ilk girildiği bilgisayara bağlanır. Bilgisayar değiştirirseniz Telegram'dan yazın.</p></details>
+      <details><summary>Key'i başka bilgisayarda kullanabilir miyim?</summary><p>Evet. Bir key en fazla 6 bilgisayarda çalışır. 6'dan fazla bilgisayarda kullanmak için ikinci bir lisans almanız gerekir. Bilgisayar değiştirirseniz Telegram'dan yazın.</p></details>
       <details><summary>Güncellemeler ücretli mi?</summary><p>Hayır. Key süreniz boyunca çıkan tüm güncellemeler ücretsizdir ve bot kendini otomatik günceller.</p></details>
       <details><summary>Bot açıkken bilgisayarı kullanabilir miyim?</summary><p>Bot fare ve klavyeyi kullandığı için çalışırken bilgisayarı kullanmamanız önerilir. Duraklat (F8) ile istediğiniz an araya girebilirsiniz.</p></details>
       <details class="uyari"><summary>Ban riski var mı?</summary><p>Evet. Botlar oyunun kullanım şartlarına aykırıdır ve hesabınızın kapatılmasına yol açabilir. Bot riskleri azaltan önlemler içerir, ancak ban olmayacağı garanti edilemez. Kullanım riski tamamen kullanıcıya aittir; ban nedeniyle iade yapılmaz.</p></details>

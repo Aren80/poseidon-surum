@@ -6,70 +6,37 @@
 <title>Poseidon — Metin2 Balık Botu</title>
 <meta name="description" content="Poseidon: Metin2 için otomatik balık tutma botu. Yem, minigame, pişirme, filtre, mola ve Telegram ile uzaktan kontrol.">
 <link rel="icon" href="favicon.ico">
+<script>document.documentElement.className = "js";</script>
 <style>
-  /* Renkler panelle aynı: derin siyah zemin, grafit kartlar, altın vurgu */
-  :root {
-    --arka: #0d0f12; --kart: #161920; --kenar: #242936; --metin: #e6e9ef; --soluk: #8a92a3;
-    --vurgu: #f4b740; --yesil: #1fe07f; --yesil-koyu: #0f2a1e; --kirmizi: #ff4d5e;
-    --font: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--arka); color: var(--metin); font: 16px/1.6 var(--font); }
-  a { color: inherit; }
-  .kap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
-
-  /* Üst menü */
-  header { position: sticky; top: 0; z-index: 10; background: rgba(13,15,18,.88);
-           backdrop-filter: blur(8px); border-bottom: 1px solid var(--kenar); }
-  .menu { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
-  .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-  .logo .p { width: 36px; height: 36px; border: 1px solid var(--vurgu); border-radius: 9px;
-             display: grid; place-items: center; color: var(--vurgu); font-weight: 800; background: var(--kart); }
-  .logo b { letter-spacing: .08em; font-size: 17px; }
-  nav a { color: var(--soluk); text-decoration: none; font-weight: 600; font-size: 14px; margin-left: 22px; }
-  nav a:hover { color: var(--metin); }
-  @media (max-width: 720px) { nav a:not(.dugme) { display: none; } }
-  /* Telefonda iki düğme menüye sığmayıp üst üste biniyordu; İndir girişte zaten var */
-  @media (max-width: 480px) { nav a.dugme.ikinci { display: none; } }
-
-  /* Düğmeler */
-  .dugme { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 12px;
-           font-weight: 700; text-decoration: none; border: 1px solid; transition: .15s; white-space: nowrap; }
-  .dugme.ana { background: var(--yesil-koyu); border-color: var(--yesil); color: var(--yesil); }
-  .dugme.ana:hover { background: #17573a; color: #fff; }
-  .dugme.ikinci { background: var(--kart); border-color: var(--kenar); color: var(--metin); }
-  .dugme.ikinci:hover { border-color: var(--vurgu); color: var(--vurgu); }
-  nav .dugme { padding: 8px 16px; margin-left: 22px; }
-
-  /* Giriş: ziyaretçi minigame'i kendisi dener, sonra botu izler */
-  .giris-alan { background: radial-gradient(700px 420px at 75% 45%, rgba(46,130,190,.18), transparent 70%), var(--arka); }
-  .giris { padding-block: 64px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-  .giris > * { min-width: 0; }
-  .etiket { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .12em; color: var(--vurgu);
-            border: 1px solid var(--kenar); background: var(--kart); padding: 5px 12px; border-radius: 999px; }
-  h1 { font-size: clamp(38px, 5.6vw, 64px); line-height: 1.05; margin: 18px 0 16px; letter-spacing: -.02em; }
-  h1 span { color: var(--vurgu); }
-  .giris p { color: var(--soluk); font-size: 18px; margin: 0 0 26px; max-width: 44ch; }
-  .giris .dugmeler { display: flex; gap: 12px; flex-wrap: wrap; }
-  .giris .not { font-size: 13px; color: var(--soluk); margin-top: 14px; }
-  @media (max-width: 900px) { .giris { grid-template-columns: 1fr; padding-top: 44px; } }
-  /* Ekran görüntüsü çerçevesi (galeri) */
-  .ekran { border-radius: 16px; border: 1px solid var(--kenar); overflow: hidden; background: var(--kart);
-           box-shadow: 0 30px 80px rgba(0,0,0,.55); }
-  .ekran img { display: block; width: 100%; height: auto; }
-  .skor { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 26px; max-width: 420px; }
-  .skor div { background: var(--kart); border: 1px solid var(--kenar); border-radius: 14px; padding: 12px 16px; }
-  .skor small { display: block; color: var(--soluk); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
-  .skor b { font-size: 26px; font-variant-numeric: tabular-nums; }
-  .skor .bot b { color: var(--vurgu); }
+:root{--z:#05141d;--y:#0a222e;--c:#194250;--m:#e6f3f5;--s:#9dbcc4;--v:#54dcee;--a:#f0c468;--vurgu:#f0c468;--kirmizi:#ff8a8f;--yesil:#5fe0a5;--yesil-koyu:#0d3d42;--soluk:#9dbcc4;--kenar:#194250;--kart:#0a222e;--metin:#e6f3f5;--b:Bahnschrift,"DIN Alternate","Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box}html{scroll-padding-top:90px}body{margin:0;background:var(--z);color:var(--m);font:16px/1.6 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+a{color:var(--v)}img{display:block;max-width:100%;height:auto}.kap{max-width:1160px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:5;background:#05141df2;border-bottom:1px solid var(--c)}header .kap{display:flex;align-items:center;gap:28px;min-height:70px}
+.logo{display:flex;align-items:baseline;gap:10px;text-decoration:none;color:var(--a);font:600 25px var(--b)}.logo small{font:400 13px "Segoe UI";color:var(--s)}
+nav{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}nav a{padding:23px 13px 20px;color:var(--s);text-decoration:none;font-weight:600;font-size:15px;white-space:nowrap;border-bottom:3px solid transparent}nav a:hover{color:#fff}nav a[aria-current]{color:#fff;border-color:var(--v)}
+.dugme{display:inline-block;font:600 16px "Segoe UI",system-ui;padding:14px 24px;border-radius:7px;border:1px solid #2d6474;background:#0a222ecc;color:#fff;text-decoration:none;cursor:pointer;white-space:nowrap}.dugme:hover{border-color:var(--v)}.dugme.ana{background:var(--v);border-color:var(--v);color:#03212a}.dugme.ana:hover{background:#8aeaf6}
+:focus-visible{outline:3px solid var(--a);outline-offset:2px}
+header .dugme{padding:10px 18px;font-size:15px}.dugmeler{display:flex;gap:12px;flex-wrap:wrap}
+.sayfa{padding:56px 0 72px}.js .sayfa{display:none}.js .sayfa.acik{display:block}
+#ana{padding:0}.giris{background:linear-gradient(90deg,#05141d 8%,#05141dcc 42%,#05141d66),linear-gradient(#0000 55%,#05141d),url(img/deniz.jpg) 100% 0/190%}.giris .kap{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:52px;align-items:center;padding-top:74px;padding-bottom:80px}
+h1{font:300 clamp(46px,6vw,78px)/1 var(--b);letter-spacing:-.02em;margin:0 0 18px;color:#fff}h1 b{display:block;font-weight:600;color:var(--v);font-size:.42em;letter-spacing:0;margin-bottom:12px}.giris p{font-size:18px;max-width:46ch;margin:0 0 28px;color:#cfe2e6}.giris p.not{font-size:14px;margin:18px 0 0;color:var(--s)}
+.cerceve{border:1px solid #2b6271;border-radius:10px;overflow:hidden;box-shadow:0 24px 70px #000a;background:#08131d}
+.sira{border-block:1px solid var(--c);background:#071b26}.sira .kap{display:grid;grid-template-columns:repeat(3,1fr);gap:0}.sira div div{padding:26px 28px;border-left:1px solid var(--c)}.sira div div:first-child{border:0;padding-left:0}.sira b{display:block;font:600 20px var(--b);color:#fff}.sira span{color:var(--s);font-size:15px}.sira em{font-style:normal;color:var(--a)}
+.dene{padding:70px 0}.dene .kap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}h2{font:300 clamp(34px,4vw,50px)/1.1 var(--b);margin:0 0 10px;color:#fff;letter-spacing:-.01em}.alt{color:var(--s);margin:0 0 34px;font-size:17px;max-width:62ch}
+.skor{display:flex;gap:44px;margin:26px 0 0}.skor small{color:var(--s);font-size:14px;display:block}.skor b{font:300 40px var(--b);font-variant-numeric:tabular-nums}.skor .bot b{color:var(--a)}
+.grup{font:600 21px var(--b);color:var(--a);margin:44px 0 6px}dl{margin:0;display:grid;grid-template-columns:1fr 1fr;column-gap:52px}dl div{border-top:1px solid var(--c);padding:20px 0}dt{font-weight:600;font-size:17px;color:#fff}dd{margin:4px 0 0;color:var(--s)}
+.galeri-ana{display:grid;grid-template-columns:1fr 1fr;gap:34px 28px}figure{margin:0}figure.genis{grid-column:1/-1}figcaption{color:var(--s);margin-top:10px;font-size:15px}.video{aspect-ratio:16/9;margin-top:10px;border:1px solid var(--c);border-radius:10px;overflow:hidden}.video iframe{width:100%;height:100%;border:0}
+.kampanya{color:#05141d;background:var(--a);font-weight:600;font-size:14px;padding:4px 12px;border-radius:4px;display:inline-block;margin-bottom:14px}.fiyatlar{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}.paket{position:relative;border:1px solid var(--c);background:var(--y);border-radius:10px;padding:34px 30px;display:flex;flex-direction:column}.paket.one{border:2px solid var(--v)}.paket .rozet{position:absolute;top:-14px;left:28px;background:var(--v);color:#03212a;font-size:13px;font-weight:600;border-radius:4px;padding:3px 10px}.paket .sure{font:600 20px var(--b)}.eski{text-decoration:line-through;color:var(--s);min-height:26px;margin-top:14px}.tutar{font:300 54px/1.1 var(--b);color:#fff}.tutar small{font-size:22px;color:var(--s)}.gun{color:var(--s);margin:6px 0 10px}.indirim{color:var(--a);font-weight:600}.paket br{display:none}.paket .dugme{margin-top:26px;text-align:center}.pc-not{color:var(--s);margin:26px 0 60px}
+.firsat{display:grid;grid-template-columns:1fr 1fr;gap:56px;border-top:1px solid var(--c);padding-top:36px}.firsat .kart h3,.adim h3{margin:0;font:600 20px var(--b);color:#fff}.firsat .buyuk{font:300 32px var(--b);color:var(--a);margin:6px 0}.firsat p,.adim p{color:var(--s)}
+.adimlar{counter-reset:a;border-bottom:1px solid var(--c)}.adim{counter-increment:a;border-top:1px solid var(--c);padding:26px 0 18px 92px;position:relative}.adim:before{content:counter(a);position:absolute;left:10px;top:14px;font:300 54px var(--b);color:var(--v)}.adim p{margin:4px 0 0;max-width:75ch}
+details{border-top:1px solid var(--c);padding:20px 0}details:last-child{border-bottom:1px solid var(--c)}summary{font:600 18px var(--b);cursor:pointer;color:#fff}details p{color:var(--s);max-width:80ch;margin:10px 0 0}.uyari summary{color:var(--a)}
+footer{border-top:1px solid var(--c);padding:30px 0 42px;color:var(--s);font-size:14px}footer p{margin:0 0 8px}
+@media(max-width:980px){header .kap{flex-wrap:wrap;gap:0 16px}nav{order:3;width:100%;margin:0 -24px;padding:0 14px;width:calc(100% + 48px)}nav a{padding:10px 11px}header .dugme{margin-left:auto}.logo{padding:12px 0}.giris .kap,.dene .kap,.firsat{grid-template-columns:minmax(0,1fr);gap:36px}.giris .kap{padding-top:44px;padding-bottom:50px}.fiyatlar,dl,.galeri-ana{grid-template-columns:minmax(0,1fr)}.fiyatlar{gap:30px}}
+@media(max-width:640px){.sira .kap{grid-template-columns:1fr}.sira div div{border:0;border-top:1px solid var(--c);padding:18px 0}.sira div div:first-child{border:0}.adim{padding-left:60px}.adim:before{left:0}.logo small{display:none}.sayfa{padding-top:36px}}
   .oyun-yan { display: grid; justify-items: center; gap: 14px; width: 100%; }
   .oyun-yan .dugmeler { justify-content: center; }
   .ipucu { color: #b9c0cc; font-size: 14px; text-align: center; min-height: 1.6em; margin: 0; }
   .ipucu b { color: var(--vurgu); }
-  button.dugme { font: inherit; font-weight: 700; cursor: pointer; }
-
-  /* Oyundaki Balıkçılık penceresinin benzeri */
   .oyun { width: min(100%, 380px); aspect-ratio: 1 / 1.02; border-radius: 6px; padding: 8px; position: relative;
           background: linear-gradient(#3a2a1c, #22180f); border: 1px solid #6b5132;
           box-shadow: 0 0 0 1px #000, 0 30px 90px rgba(0,0,0,.7); }
@@ -82,184 +49,54 @@
   .oyun .sure { position: absolute; left: 20px; right: 20px; bottom: 18px; height: 12px; border-radius: 6px;
                 background: #0b2236; border: 1px solid #3a6c96; overflow: hidden; }
   .oyun .sure i { display: block; height: 100%; width: 100%; background: linear-gradient(#f6e15a, #c9a92a); transform-origin: left; }
-  .tost { position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%) scale(.9); opacity: 0; transition: .25s;
           background: rgba(10,16,24,.92); border: 1px solid var(--yesil); color: var(--yesil); padding: 10px 18px;
           border-radius: 12px; font-weight: 800; white-space: nowrap; pointer-events: none; }
-  .tost.gor { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  .tost.kotu { border-color: var(--kirmizi); color: var(--kirmizi); }
-
-  section { padding: 56px 0; }
-  h2 { font-size: 30px; margin: 0 0 8px; }
-  .alt { color: var(--soluk); margin: 0 0 30px; }
-
-  /* Özellik kartları */
-  .izgara { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
-  .kart { background: var(--kart); border: 1px solid var(--kenar); border-radius: 16px; padding: 22px; }
-  .kart h3 { margin: 0 0 6px; font-size: 16px; display: flex; gap: 10px; align-items: center; }
-  .kart h3::before { content: ""; width: 3px; height: 16px; background: var(--vurgu); border-radius: 2px; }
-  .kart p { margin: 0; color: var(--soluk); font-size: 14.5px; }
-
-  /* Ekran görüntüleri */
-  .galeri { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .galeri figure { margin: 0; }
-  .galeri figcaption { color: var(--soluk); font-size: 13px; margin-top: 8px; }
-  @media (max-width: 820px) { .galeri { grid-template-columns: 1fr; } }
-
-  /* Fiyatlar */
-  .fiyatlar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  @media (max-width: 820px) { .fiyatlar { grid-template-columns: 1fr; } }
-  .paket { text-align: center; padding: 30px 22px; position: relative; }
-  .paket.one { border-color: var(--vurgu); }
-  .paket .rozet { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--vurgu);
-                  color: #111; font-size: 12px; font-weight: 800; padding: 3px 12px; border-radius: 999px; }
-  .paket .sure { color: var(--soluk); font-weight: 700; letter-spacing: .1em; font-size: 13px; }
-  .paket .tutar { font-size: 42px; font-weight: 800; margin: 8px 0 2px; }
-  .paket .tutar small { font-size: 18px; color: var(--soluk); font-weight: 600; }
-  .paket .gun { color: var(--soluk); font-size: 14px; margin-bottom: 12px; }
-  .paket .eski { color: var(--soluk); font-size: 16px; text-decoration: line-through; margin-top: 6px; min-height: 22px; }
-  .kampanya { display: inline-block; background: var(--kirmizi); color: #fff; font-weight: 800; font-size: 13px;
-              letter-spacing: .06em; padding: 4px 12px; border-radius: 999px; margin-bottom: 12px; }
-  .paket .indirim { display: inline-block; background: var(--yesil-koyu); color: var(--yesil); font-size: 12px; font-weight: 800;
-                    padding: 2px 10px; border-radius: 999px; margin-bottom: 14px; }
-  .paket .indirim.altin { background: rgba(244,183,64,.12); color: var(--vurgu); }
-  .pc-not { margin: 22px auto 0; max-width: 640px; text-align: center; color: var(--soluk); font-size: 14.5px;
-            background: var(--kart); border: 1px dashed var(--kenar); border-radius: 14px; padding: 14px 18px; }
-  .pc-not b { color: var(--metin); }
-  .video { max-width: 860px; margin: 0 auto; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden;
-           border: 1px solid var(--kenar); background: #000; box-shadow: 0 20px 60px rgba(0,0,0,.45); }
-  .video iframe { width: 100%; height: 100%; border: 0; display: block; }
-  #video h2, #video .alt { text-align: center; }
-  .firsat { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 820px) { .firsat { grid-template-columns: 1fr; } }
-  .firsat .kart { padding: 28px; }
-  .firsat .buyuk { font-size: 26px; font-weight: 800; color: var(--vurgu); margin: 4px 0 8px; }
-  .firsat .dugme { margin-top: 16px; }
-
-  /* Adımlar */
-  .adimlar { counter-reset: a; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  @media (max-width: 900px) { .adimlar { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 520px) { .adimlar { grid-template-columns: 1fr; } }
-  .adim::before { counter-increment: a; content: counter(a); display: grid; place-items: center; width: 34px; height: 34px;
-                  border-radius: 10px; border: 1px solid var(--vurgu); color: var(--vurgu); font-weight: 800; margin-bottom: 12px; }
-
-  /* SSS */
-  details { background: var(--kart); border: 1px solid var(--kenar); border-radius: 14px; padding: 16px 20px; margin-bottom: 10px; }
-  summary { cursor: pointer; font-weight: 700; }
-  details p { color: var(--soluk); margin: 10px 0 0; }
-
-  .uyari { border-left: 3px solid var(--kirmizi); }
-  footer { border-top: 1px solid var(--kenar); padding: 28px 0 40px; color: var(--soluk); font-size: 13px; }
-  a.destek { color: var(--vurgu, #f0b43c); font-weight: 700; }
-  .destek-alt { margin: 0 0 12px; font-size: 14px; }
-</style>
+.oyun-yan{min-width:0}</style>
 </head>
 <body>
-
-<header>
-  <div class="kap menu">
-    <a class="logo" href="#"><span class="p">P</span><b>POSEIDON</b></a>
-    <nav>
-      <a href="#ozellikler">Özellikler</a>
-      <a href="#video">Video</a>
-      <a href="#fiyatlar">Fiyatlar</a>
-      <a href="#firsatlar">Fırsatlar</a>
-      <a href="#nasil">Nasıl alınır</a>
-      <a href="#sss">SSS</a>
-      <a class="dugme ikinci" href="https://github.com/Aren80/poseidon-surum/releases/download/platform-stable-v1.54.1/Poseidon-Kurulum-1.54.1.zip">İndir</a>
-      <a class="dugme ana telegram" href="#">Satın al</a>
-    </nav>
-  </div>
-</header>
-
+<header><div class="kap"><a class="logo" href="#ana" data-sekme="ana">Poseidon <small>v1.55</small></a>
+<nav aria-label="Sayfalar"><a href="#ana" data-sekme="ana">Ana sayfa</a><a href="#ozellikler" data-sekme="ozellikler">Özellikler</a><a href="#goruntuler" data-sekme="goruntuler">Görüntüler</a><a href="#fiyatlar" data-sekme="fiyatlar">Fiyatlar</a><a href="#nasil" data-sekme="nasil">Nasıl alınır</a><a href="#sss" data-sekme="sss">SSS</a></nav><a class="dugme ana telegram" href="#">Satın al</a></div></header>
 <main>
-  <div class="giris-alan">
-  <div class="kap giris">
-    <div>
-      <span class="etiket">METİN2 BALIK BOTU</span>
-      <h1>Sen kaç balık <span>tutabilirsin?</span></h1>
-      <p>Balık halkanın içindeyken üstüne tıkla; 3 isabet bir balık eder. Şimdi aynısını saatlerce,
-         hiç kaçırmadan yaptığını düşün. Poseidon tam olarak bunu yapar.</p>
-      <div class="skor"><div><small>SEN</small><b id="skor-sen">0 / 0</b></div>
-                        <div class="bot"><small>POSEIDON</small><b id="skor-bot">0 / 0</b></div></div>
-      <div class="dugmeler">
-        <a class="dugme ana telegram" href="#">Telegram'dan satın al</a>
-        <a class="dugme ikinci" href="https://github.com/Aren80/poseidon-surum/releases/download/platform-stable-v1.54.1/Poseidon-Kurulum-1.54.1.zip">İndir (Windows)</a>
-        <a class="dugme ikinci" href="#fiyatlar">Fiyatları gör</a>
-      </div>
-      <div class="not">Kampanya: aylık 1.500 TL · 1 gün ücretsiz deneme · key aynı gün Telegram'dan gelir</div>
-    </div>
+<section class="sayfa" id="ana">
+  <div class="giris"><div class="kap"><div><h1><b>Metin2 balık botu</b>Poseidon</h1>
+    <p>Yemi takar, oltayı atar, balığı tutar. Oyunun belleğine dokunmaz; ekrana bakıp fare ve klavye ile, bir oyuncu gibi çalışır.</p>
+    <div class="dugmeler"><a class="dugme ana telegram" href="#">Telegram'dan satın al</a><a class="dugme" href="https://github.com/Aren80/poseidon-surum/releases/download/platform-stable-v1.55.0/Poseidon-Kurulum-1.55.0.zip">İndir (Windows)</a></div>
+    <p class="not">Kampanya: aylık 1.500 TL. 1 gün ücretsiz deneme var.</p></div>
+    <div class="cerceve"><img src="img/panel.jpg" width="1100" height="780" alt="Poseidon ana sayfası"></div></div></div>
+  <div class="sira"><div class="kap"><div><b>Balık botu</b><span>Yayında, bugün kullanabilirsiniz</span></div><div><b>Kostüm efsun botu</b><span>Geliştirildi, <em>test aşamasında</em></span></div><div><b>Enerji Parçası botu</b><span>Geliştirildi, <em>test aşamasında</em></span></div></div></div>
+  <div class="dene"><div class="kap"><div><h2>Sen kaç balık tutabilirsin?</h2><p class="alt" style="margin:0">Balık halkanın içindeyken üstüne tıkla; 3 isabet bir balık eder. Sonra "Botu izle"ye bas, farkı gör.</p>
+    <div class="skor"><div><small>Sen</small><b id="skor-sen">0 / 0</b></div><div class="bot"><small>Poseidon</small><b id="skor-bot">0 / 0</b></div></div></div>
     <div class="oyun-yan">
       <div class="oyun" id="oyun"><div class="baslik">Balıkçılık</div>
         <canvas aria-label="Balık tutma minigame'i: balık halkanın içindeyken üstüne tıklayın"></canvas>
         <div class="sayi">0 / 3</div><div class="sure"><i></i></div><div class="tost" role="status"></div></div>
       <p class="ipucu" id="ipucu">Balığa tıkla: <b>halkanın içindeyken</b> sayılır.</p>
-      <div class="dugmeler"><button class="dugme ikinci" id="oyun-mod" type="button">Botu izle</button></div>
-    </div>
-  </div>
-  </div>
-
-  <section id="ozellikler">
-    <div class="kap">
-      <h2>Özellikler</h2>
-      <p class="alt">Oyunun belleğine dokunmaz; ekrana bakıp fare ve klavye ile, bir oyuncu gibi çalışır.</p>
-      <div class="izgara">
-        <div class="kart"><h3>Tam otomatik döngü</h3><p>Yem takma, olta atma, minigame ve sonucun okunması kendiliğinden; zırh değiştirerek animasyonu kısaltır.</p></div>
-        <div class="kart"><h3>Tek tuşla yem alma</h3><p>Balıkçı dükkânını açıp "Şimdi al"a basın; istediğiniz sayıda solucanı alıp envantere dizer, işaretli eşyaları önce satar. Yem azalınca ve bitince Telegram'dan haber verir.</p></div>
-        <div class="kart"><h3>Balık filtresi</h3><p>Hangi balıkların tutulacağını siz seçersiniz; istemedikleriniz oltadan bırakılır. Altın Ton Balığı her zaman tutulur.</p></div>
-        <div class="kart"><h3>Pişirme ve yere atma</h3><p>Seçtiğiniz balıkları Kamp Ateşi'nde pişirir; envanter dolunca işaretli balıkları yere atar.</p></div>
-        <div class="kart"><h3>Mola ve karakter değişimi</h3><p>Belirli sürelerle mola verir, sıradaki karaktere geçer. Sürelere rastgele sapma eklenebilir.</p></div>
-        <div class="kart"><h3>İnsan gibi davranış</h3><p>Ayarlanabilir hız, ara sıra duraksama, kısa AFK anları ve kamera hareketleri ile hep aynı ritimde çalışmaz.</p></div>
-        <div class="kart"><h3>Güvenlik önlemleri</h3><p>Sohbette GM ya da "bot musun" sorusu görülünce, can azalınca veya bağlantı kopunca durur ve haber verir.</p></div>
-        <div class="kart"><h3>Telegram ile uzaktan kontrol</h3><p>Başlat, durdur, ekran görüntüsü, istatistik ve günlük rapor telefonunuza gelir.</p></div>
-        <div class="kart"><h3>Oyun içi sohbet</h3><p>Size yazanlara yapay zekâ ile kısa, doğal cevaplar verir; mesajları Telegram'a iletir.</p></div>
-        <div class="kart"><h3>Mini pencere ve kısayollar</h3><p>F5 başlat, F8 duraklat, F6 durdur; F10 ile oyunun yanında duran küçük pencere.</p></div>
-        <div class="kart"><h3>Otomatik güncelleme</h3><p>Yeni sürüm çıkınca bot kendini günceller; ayarlarınız ve key'iniz korunur.</p></div>
-        <div class="kart"><h3>Canlı istatistik</h3><p>Tutulan, kaçan, pişen balıklar ve türlere göre günlük sayaç.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="kap">
-      <h2>Ekran görüntüleri</h2>
-      <p class="alt">Tek, sade bir panel: her ayar kendi sekmesinde.</p>
-      <div class="galeri">
-        <figure><div class="ekran"><img src="img/baliklar.png" alt="Balık filtresi ve pişirme seçimi" loading="lazy" width="1100" height="800"></div><figcaption>Balıklar: tut / pişir / at seçimi</figcaption></figure>
-        <figure><div class="ekran"><img src="img/karakter.png" alt="Hız, mola ve karakter ayarları" loading="lazy" width="1100" height="800"></div><figcaption>Karakter: hız, mola, karakter değişimi</figcaption></figure>
-        <figure><div class="ekran"><img src="img/mini.png" alt="Mini pencere" loading="lazy" width="412" height="222"></div><figcaption>Mini pencere (F10)</figcaption></figure>
-      </div>
-    </div>
-  </section>
-
-  <section id="video">
-    <div class="kap">
-      <h2>Poseidon'u iş başında izleyin</h2>
-      <p class="alt">Kurulumdan balık tutmaya kadar botun nasıl çalıştığını videoda görün.</p>
-      <div class="video">
-        <iframe src="https://www.youtube-nocookie.com/embed/Df4wTTm9hTU" title="Poseidon tanıtım videosu" loading="lazy"
-          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-      </div>
-    </div>
-  </section>
-
-  <section id="fiyatlar">
-    <div class="kap">
-      <span class="kampanya">KAMPANYA · KISA SÜRELİĞİNE</span>
+      <div class="dugmeler"><button class="dugme" id="oyun-mod" type="button">Botu izle</button></div>
+    </div></div>
+</section>
+<section class="sayfa" id="ozellikler"><div class="kap"><h2>Özellikler</h2><p class="alt">Hepsi tek programda, her ayar kendi sayfasında.</p><h3 class='grup'>Balık tutma</h3><dl><div><dt>Tam otomatik döngü</dt><dd>Yem takma, olta atma, minigame ve sonucun okunması kendiliğinden; zırh değiştirerek animasyonu kısaltır.</dd></div><div><dt>Tek tuşla yem alma</dt><dd>Balıkçı dükkânını açıp "Şimdi al"a basın; istediğiniz sayıda solucanı alıp envantere dizer, işaretli eşyaları önce satar. Yem azalınca ve bitince Telegram'dan haber verir.</dd></div><div><dt>Balık filtresi</dt><dd>Hangi balıkların tutulacağını siz seçersiniz; istemedikleriniz oltadan bırakılır. Altın Ton Balığı her zaman tutulur.</dd></div><div><dt>Pişirme ve yere atma</dt><dd>Seçtiğiniz balıkları Kamp Ateşi'nde pişirir; envanter dolunca işaretli balıkları yere atar.</dd></div></dl><h3 class='grup'>Kendi başına çalışma</h3><dl><div><dt>Mola ve karakter değişimi</dt><dd>Belirli sürelerle mola verir, sıradaki karaktere geçer. Sürelere rastgele sapma eklenebilir.</dd></div><div><dt>İnsan gibi davranış</dt><dd>Ayarlanabilir hız, ara sıra duraksama, kısa AFK anları ve kamera hareketleri ile hep aynı ritimde çalışmaz.</dd></div><div><dt>Güvenlik önlemleri</dt><dd>Sohbette GM ya da "bot musun" sorusu görülünce, can azalınca veya bağlantı kopunca durur ve haber verir.</dd></div><div><dt>Canlı istatistik</dt><dd>Tutulan, kaçan, pişen balıklar ve türlere göre günlük sayaç.</dd></div></dl><h3 class='grup'>Uzaktan kontrol ve kolaylık</h3><dl><div><dt>Telegram ile uzaktan kontrol</dt><dd>Başlat, durdur, ekran görüntüsü, istatistik ve günlük rapor telefonunuza gelir.</dd></div><div><dt>Oyun içi sohbet</dt><dd>Size yazanlara yapay zekâ ile kısa, doğal cevaplar verir; mesajları Telegram'a iletir.</dd></div><div><dt>Mini pencere ve kısayollar</dt><dd>F5 başlat, F8 duraklat, F6 durdur; F10 ile oyunun yanında duran küçük pencere.</dd></div><div><dt>Otomatik güncelleme</dt><dd>Yeni sürüm çıkınca bot kendini günceller; ayarlarınız ve key'iniz korunur.</dd></div></dl></div></section>
+<section class="sayfa" id="goruntuler"><div class="kap"><h2>Görüntüler</h2><p class="alt">Programın kendi ekranları. Sayılar örnektir.</p><div class="galeri-ana">
+  <figure><div class="cerceve"><img loading="lazy" src="img/baliklar.jpg" width="1100" height="780" alt="Balık filtresi"></div><figcaption>Balıklar: tut, pişir, at seçimi</figcaption></figure>
+  <figure><div class="cerceve"><img loading="lazy" src="img/karakter.jpg" width="1100" height="780" alt="Hız ve karakter ayarları"></div><figcaption>Karakter: hız ve davranış</figcaption></figure>
+  <figure><div class="cerceve"><img loading="lazy" src="img/mola.jpg" width="1100" height="780" alt="Mola ekranı"></div><figcaption>Mola ekranı</figcaption></figure>
+  <figure><div class="cerceve"><img loading="lazy" src="img/ayarlar.jpg" width="1100" height="780" alt="Ayarlar"></div><figcaption>Ayarlar: yem ve pişirme</figcaption></figure>
+  <figure class="genis" id="video"><h2>Tanıtım videosu</h2><div class="video"><iframe src="https://www.youtube-nocookie.com/embed/Df4wTTm9hTU" title="Poseidon tanıtım videosu" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div></figure></div></div></section>
+<section class="sayfa" id="fiyatlar"><div class="kap">
+      <span class="kampanya">Kısa süreliğine kampanya</span>
       <h2>Fiyatlar</h2>
       <p class="alt">Süre, key ilk girildiği an başlar.</p>
       <div class="fiyatlar">
         <div class="kart paket">
-          <div class="sure">AYLIK</div>
+          <div class="sure">Aylık</div>
           <div class="eski">2.000 TL</div>
           <div class="tutar">1.500<small> TL</small></div>
           <div class="gun">30 gün</div>
           <div class="indirim">500 TL indirim</div><br>
-          <a class="dugme ikinci telegram" href="#">Satın al</a>
+          <a class="dugme telegram" href="#">Satın al</a>
         </div>
         <div class="kart paket one">
-          <span class="rozet">EN ÇOK TERCİH EDİLEN</span>
-          <div class="sure">3 AYLIK</div>
+          <span class="rozet">En çok tercih edilen</span>
+          <div class="sure">3 aylık</div>
           <div class="eski">5.500 TL</div>
           <div class="tutar">4.000<small> TL</small></div>
           <div class="gun">90 gün · ayda yalnızca ~1.333 TL</div>
@@ -267,21 +104,17 @@
           <a class="dugme ana telegram" href="#">Satın al</a>
         </div>
         <div class="kart paket">
-          <div class="sure">SINIRSIZ</div>
+          <div class="sure">Sınırsız</div>
           <div class="eski"></div>
           <div class="tutar">6.000<small> TL</small></div>
           <div class="gun">Süresiz · tek seferlik ödeme</div>
           <div class="indirim altin">Bir kere öde, hep kullan</div><br>
-          <a class="dugme ikinci telegram" href="#">Satın al</a>
+          <a class="dugme telegram" href="#">Satın al</a>
         </div>
       </div>
       <p class="pc-not">Tüm paketlerde <b>1 key en fazla 6 bilgisayarda</b> çalışır. 6'dan fazla bilgisayar için ikinci bir lisans alınması gerekir.</p>
-    </div>
-  </section>
-
-  <section id="firsatlar">
-    <div class="kap">
-      <h2>Fırsatlar</h2>
+    <h2 id="firsatlar">Fırsatlar</h2>
+      
       <p class="alt">Önce dene, sonra arkadaşlarını getir, kazan.</p>
       <div class="firsat">
         <div class="kart">
@@ -294,29 +127,23 @@
           <h3>Arkadaşını getir</h3>
           <div class="buyuk">Her arkadaşa +1 hafta</div>
           <p>Getirdiğiniz her kişi aylık (veya daha uzun) paket aldığında, size 1 hafta ücretsiz key süresi eklenir. Ne kadar çok kişi, o kadar çok hafta.</p>
-          <a class="dugme ikinci telegram" href="#">Telegram'dan bilgi al</a>
+          <a class="dugme telegram" href="#">Telegram'dan bilgi al</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section id="nasil">
-    <div class="kap">
+    </div></section>
+<section class="sayfa" id="nasil"><div class="kap">
       <h2>Nasıl satın alınır?</h2>
       <p class="alt">Dört adımda başlarsınız.</p>
       <div class="adimlar">
         <div class="kart adim"><h3>Telegram'dan yazın</h3><p>İstediğiniz paketi söyleyin; ödeme bilgilerini size özelden iletiriz.</p></div>
         <div class="kart adim"><h3>Havale / EFT yapın</h3><p>Açıklamaya yalnızca Telegram kullanıcı adınızı yazın, dekontu gönderin.</p></div>
         <div class="kart adim"><h3>Key'iniz gelsin</h3><p>Ödeme görülünce key'iniz Telegram'dan gönderilir.</p></div>
-        <div class="kart adim"><h3>İndirip başlayın</h3><p><a href="https://github.com/Aren80/poseidon-surum/releases/download/platform-stable-v1.54.1/Poseidon-Kurulum-1.54.1.zip">Poseidon kurulum paketini</a> (~60 MB) indirin, bir klasöre çıkarın, Poseidon klasöründeki Poseidon.exe'yi açın. İlk açılışta en son sürüm kendiliğinden kurulur; sonra key'i girin. Klasörde yalnızca Poseidon.exe görünür; botu her zaman onunla açın.</p></div>
+        <div class="kart adim"><h3>İndirip başlayın</h3><p><a href="https://github.com/Aren80/poseidon-surum/releases/download/platform-stable-v1.55.0/Poseidon-Kurulum-1.55.0.zip">Poseidon kurulum paketini</a> (~60 MB) indirin, bir klasöre çıkarın, Poseidon klasöründeki Poseidon.exe'yi açın. İlk açılışta en son sürüm kendiliğinden kurulur; sonra key'i girin. Klasörde yalnızca Poseidon.exe görünür; botu her zaman onunla açın.</p></div>
       </div>
-    </div>
-  </section>
-
-  <section id="sss">
-    <div class="kap">
+    </div></section>
+<section class="sayfa" id="sss"><div class="kap">
       <h2>Sık sorulan sorular</h2>
-      <p class="alt">&nbsp;</p>
+      
       <details open><summary>Kurulum ya da ayar sorum var, nereye sorayım?</summary><p>Telegram'daki <a class="destek" href="https://t.me/PoseidonDestekBot" target="_blank" rel="noopener">@PoseidonDestekBot</a> destek botumuza yazın; kurulum ve ayar sorularını (ör. "3 karakteri sırayla nasıl tuttururum?") hemen cevaplar. Cevabını bilmediği sorular ve lisans, key, ödeme konuları destek ekibine iletilir.</p></details>
       <details><summary>Neler gerekiyor?</summary><p>Windows 10 ya da 11 ve Metin2 istemcisi. Ekstra program kurmanız gerekmez; güncellemeler kendiliğinden indirilip kurulur. Oyun penceresinin 800×600 boyutta ve ekranda görünür olması önerilir.</p></details>
       <details><summary>Key'i başka bilgisayarda kullanabilir miyim?</summary><p>Evet. Bir key en fazla 6 bilgisayarda çalışır. 6'dan fazla bilgisayarda kullanmak için ikinci bir lisans almanız gerekir. Bilgisayar değiştirirseniz Telegram'dan yazın.</p></details>
@@ -324,19 +151,26 @@
       <details><summary>Bot açıkken bilgisayarı kullanabilir miyim?</summary><p>Bot fare ve klavyeyi kullandığı için çalışırken bilgisayarı kullanmamanız önerilir. Duraklat (F8) ile istediğiniz an araya girebilirsiniz.</p></details>
       <details class="uyari"><summary>Ban riski var mı?</summary><p>Evet. Botlar oyunun kullanım şartlarına aykırıdır ve hesabınızın kapatılmasına yol açabilir. Bot riskleri azaltan önlemler içerir, ancak ban olmayacağı garanti edilemez. Kullanım riski tamamen kullanıcıya aittir; ban nedeniyle iade yapılmaz.</p></details>
       <details><summary>İade var mı?</summary><p>Key bilgisayara bağlandıktan sonra iade yapılmaz. Satın almadan önce sorularınızı Telegram'dan sorabilirsiniz.</p></details>
-    </div>
-  </section>
+    </div></section>
 </main>
-
-<footer>
-  <div class="kap">
-    <p class="destek-alt">Kurulum ve ayar soruları için destek botu:
-      <a class="destek" href="https://t.me/PoseidonDestekBot" target="_blank" rel="noopener">@PoseidonDestekBot</a></p>
-    Poseidon bağımsız bir projedir; Metin2, Gameforge ya da Webzen ile bir bağlantısı yoktur.
-    Metin2 adı sahiplerine aittir. Botun kullanımından doğan tüm sorumluluk kullanıcıya aittir.
-  </div>
-</footer>
-
+<footer><div class="kap"><p>Kurulum ve ayar soruları: <a href="https://t.me/PoseidonDestekBot" target="_blank" rel="noopener">@PoseidonDestekBot</a></p>Poseidon bağımsız bir projedir; Metin2, Gameforge ya da Webzen ile bir bağlantısı yoktur. Metin2 adı sahiplerine aittir. Botun kullanımından doğan tüm sorumluluk kullanıcıya aittir.</div></footer>
+<script>
+  // Sekmeler: adresteki #ad açılan sayfadır; sayfa içi bir yer verilirse (#video) onun sekmesi açılır.
+  (() => {
+    const sayfalar = [...document.querySelectorAll(".sayfa")];
+    const ac = () => {
+      const hedef = document.getElementById(location.hash.slice(1)) || sayfalar[0];
+      const sayfa = hedef.closest(".sayfa") || sayfalar[0];
+      sayfalar.forEach(s => s.classList.toggle("acik", s === sayfa));
+      document.querySelectorAll("nav a").forEach(a => {
+        if (a.dataset.sekme === sayfa.id) { a.setAttribute("aria-current", "page"); a.scrollIntoView({ block: "nearest", inline: "center" }); }
+        else a.removeAttribute("aria-current");
+      });
+      if (hedef === sayfa) scrollTo(0, 0); else hedef.scrollIntoView();
+    };
+    addEventListener("hashchange", ac); ac();
+  })();
+</script>
 <script>
   // Telegram kullanıcı adınızı yalnızca burada değiştirin (başında @ olmadan).
   const TELEGRAM = "PoseidonBalik";
